@@ -135,6 +135,7 @@ Choose a suitable file Name let’s say ( main ) Then press finish
       }
       return 0;
     }
+    
 Then Press Shift + F11. This will generate a hex file in your project path shown in the IDE below.  
 </br>
 <p align="center">
@@ -292,7 +293,15 @@ Apply on I2c connection using Arduino Uno and MPU6050
 <p align="center">
   <img src="images/30.png"/>
 </p>
-
+<p align="center">MPU6050 in I2C Configuration with Arduino uno</p>
+<p align="center">
+  <img src="images/43.png"/>
+</p>
+<p align="center">RTC IC in I2C configuration with Arduino uno (press Virtual terminal to view Output)</p>  
+<p align="center">
+  <img src="images/44.png"/>
+</p>
+  
  # serial peripheral interface (SPI)
  <p align="center">
   <img src="images/31.png"/>
@@ -441,8 +450,13 @@ If only one slave select pin is available, the slaves can be daisy-chained like 
 
 Arduino Example:
   <p align="center"> 
+    <img src="images/45.png"/>
+  </p>  
+  
+  <p align="center"> 
     <img src="images/42.png"/>
   </p>  
+  
   A Serial Peripheral Interface (SPI) bus is a system for serial communication, which uses up to four conductors,  
   commonly three. One conductor is used for data receiving, one for data sending,  
   one for synchronization and one alternatively for selecting a device to communicate with.  
