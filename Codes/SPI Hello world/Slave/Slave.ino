@@ -10,6 +10,7 @@ void setup (void) {
    indx = 0; // buffer empty
    process = false;
    SPI.attachInterrupt(); // turn on interrupt
+   Serial.println("this is slave");
 }
 
 ISR (SPI_STC_vect) {// SPI interrupt routine 

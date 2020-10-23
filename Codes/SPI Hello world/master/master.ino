@@ -5,6 +5,7 @@ void setup (void) {
    digitalWrite(SS, HIGH); // disable Slave Select
    SPI.begin ();
    SPI.setClockDivider(SPI_CLOCK_DIV8);//divide the clock by 8
+   Serial.println("this is master");
 }
 
 void loop (void) {
