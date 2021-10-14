@@ -495,6 +495,158 @@ Now, we will connect two Arduino UNO boards together; one as a master and the ot
 •	(MISO) : pin 12  
 •	(SCK) : pin 13  
 The ground is common. Following is the diagrammatic representation of the connection between both the boards −
+
+# UART ( source : circuitbasics.com)
+
+## WHAT IS UART?
+    UART stands for Universal Asynchronous Receiver/Transmitter.
+    It is a hardware 
+    
+## HOW ARE UART DEVICES CONNECTED?
+    Connecting two UART devices together is simple and straightforward. Figure shows a basic UART connection diagram.
+    One wire is for transmitting data (called the TX pin) and the other is for receiving data (called the RX pin).
+    We can only connect two UART devices together.
+    
+<p align="center">
+    <img src ="images/48.png"/>
+</p>
+
+## HOW DOES UART WORK?
+    UART works by converting data into packets for sending or rebuilding data from packets received.
+
+## SENDING SERIAL DATA
+    Before the UART device can send data, the transmitting device converts the data bytes to bits.
+    After converting the data into bits,
+    the UART device then splits them into packets for transmission. Each packet contains a start bit, a data frame,
+    parity bit, and the stop bits. Figure 2 shows a sample data packet.
+    After preparing the packet, the UART circuit then sends it out via the TX pin.
+    
+<p align="center">
+    <img src ="images/49.png"/>
+</p>
+
+## RECEIVING SERIAL DATA
+    The receiving UART device checks the received packet (via RX pin) for errors by calculating the number of 1’s
+    and comparing it with the value of the parity bit contained in     the packet. If there are no errors in transmission,
+    it will then proceed to strip the start bit, stop bits,
+    and parity bit to get the data frame. It may need to receive
+    several packets before it can rebuild the whole data byte from the data frames.
+    After rebuilding the byte, it is stored in the UART buffer.
+    The receiving UART device uses the parity bit to determine if there was a data loss during transmission.
+    Data loss in transmission happens when a bit changed its state while being transmitted.
+    Bits can change because of the transmission distance, magnetic radiation, and mismatch baud rates, among other things.
+
+## UART PARAMETERS
+
+    UART has settings that need to be the same on both devices to have proper communication.
+    These UART settings are the baud rate, data length, parity bit, number of stop bits, and flow control.
+
+## BAUD RATE
+    Baud rate is the number of bits per second (bps) a UART device can transmit/receive.
+    We need to set both UART devices with the same baud rate to have the proper transmission of data.
+    Common values for baud rate are 9600, 1200, 2400, 4800 , 19200, 38400, 57600, and 115200 bps.
+
+## DATA LENGTH
+    Data length refers to the number of bits per byte of data.
+
+## PARITY BIT
+
+    The parity bit is a bit added to the transmitted data and tells the receiver if the number
+    of 1’s in the data transmitted is odd or even.
+    The possible setting for Parity Bit is Odd or Even.
+
+    ODD – the parity bit is ‘1’ if there is an odd number of 1’s in the data frame
+    EVEN – the parity bit is ‘0’ if there is an even number of 1’s in the data frame
+
+## NUMBER OF STOP BITS
+    UART devices can use none, one or two stop bits to mark the end of a set of bits (called packets) transmitted.
+
+## FLOW CONTROL
+
+    Flow Control is the method to avoid the risk of losing data when transmitting data over UART.
+    The UART device uses special characters as flow control to start/stop transmission.
+
+## ARDUINO UART INTERFACE
+    Arduino has one or more UART pins depending on the board. For our project,
+    we will use an Arduino Mega which has 4 UARTs. The one we will use is Serial1
+    interface found on pin 19 (RX1) and pin 18 (TX1).
+    
+    We will avoid UART on pins 0 and 1.
+    The Arduino pins 0 and 1 are also used for communicating with the Arduino IDE via the USB.
+    
+<p align="center">
+    <img src ="images/47.png"/>
+</p>
+
+## UART LOGIC LEVEL
+    The UART logic levels may differ between manufacturers.
+    For example, an Arduino Uno has a 5-V logic level but a computer’s RS232 port has a +/-12-V logic level.
+    Connecting an Arduino Uno directly to an RS232 port will damage the Arduino.
+    If both UART devices don’t have the same logic levels, a suitable logic level
+    converter circuit is needed to connect the devices.
+
+## A SIMPLE UART PROJECT
+    After learning how the UART works, let us now build a simple sketch demonstrating
+    how to use UART communication using Arduino Mega.
+    
+<p align="center">
+    <img src ="images/46.png"/>
+</p>
+
+    // Arduino UART Tutorial
+
+    void setup() {
+      pinMode(8, INPUT_PULLUP); // set push button pin as input
+      pinMode(13, OUTPUT);      // set LED pin as output
+      digitalWrite(13, LOW);    // switch off LED pin
+      Serial.begin(9600);       // initialize UART with baud rate of 9600 bps
+    }
+
+    void loop() {
+      if (Serial.available()) {
+        char data_rcvd = Serial.read();   // read one byte from serial buffer and save to data_rcvd
+
+        if (data_rcvd == '1') digitalWrite(13, HIGH); // switch LED On
+        if (data_rcvd == '0') digitalWrite(13, LOW);  // switch LED Off
+      }
+
+     if (digitalRead(8) == HIGH) Serial.write('0');    // send the char '0' to serial if button is not pressed.
+     else Serial.write('1');                           // send the char '1' to serial if button is pressed.
+    }
+
+## Modules you may have used and their communication protocol
+    RTC module based on DS1302 uses I2C protocol
+<p align="center">
+    <img src ="images/50.jpg"/>
+</p>
+
+    MPU6050 uses I2C protocol
+<p align="center">
+    <img src ="images/51.jpg"/>
+</p>
+
+    RFID Read/Write Module MFRC-522 (13.56 Mhz) uses SPI prtocol
+
+<p align="center">
+    <img src ="images/52.jpg"/>
+</p>
+    
+    Micro SD Card Module uses SPI protocol
+    
+<p align="center">
+    <img src ="images/53.jpg"/>
+</p>
+    
+    Ublox NEO-6m GPS Module
+<p align="center">
+    <img src ="images/54.jpg"/>
+</p>
+
+    USB to TTL (Serial) Converter
+<p align="center">
+    <img src ="images/55.jpg"/>
+</p>
+
 # 5.	Task 
 a-	Implement a communication between 2 arduinos for which one uses I2c to interface with an  
  MPU6050 and then sends the received the data over to the next Arduino using SPI.  
@@ -502,3 +654,4 @@ b-	 implement task (a) after replacing the Arduino connected to the MPU6050 with
 c-	implement task (a) after replacing the Arduino connected to the MPU6050 with an Pic16F877a  
 d-	implement task (b) after replacing the master Arduino with a PIC 16F877a connected to LCD to display the received from the atmega32L.  
 e-	implement task (d) by swapping the PIC16f877a and the atmega32L  
+f- implemt a UART communication using arduino and PIC16F877a/Atmega32
